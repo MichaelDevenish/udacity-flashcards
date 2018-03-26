@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, Alert, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { black, gray, white } from '../utils/colors'
+import { saveDeckTitle } from '../utils/storage'
 
 export default class AddDeck extends Component {
   constructor (props) {
@@ -18,15 +19,17 @@ export default class AddDeck extends Component {
 
     //todo check if card already exists
     if (text !== '') {
-      //todo add the card to the redux state
-      //todo save to the paramater store
-
       this.setState({text: ''})
 
-      this.props.navigation.navigate(
-        'AddCard',
-        {entryId: text}
+      saveDeckTitle(text).then(
+        () =>
+          this.props.navigation.navigate(
+            'AddCard',
+            {entryId: text}
+          )
       )
+
+
     }
     else {
       Alert.alert(
