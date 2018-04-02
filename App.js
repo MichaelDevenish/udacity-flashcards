@@ -8,6 +8,10 @@ import AddCard from './components/AddCard'
 import AddDeck from './components/AddDeck'
 import Decks from './components/Decks'
 import { Constants } from 'expo'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducer from './reducers'
+import { setLocalNotification } from './utils/notification'
 
 function UdacistatusBar ({ backgroundColor, ...props }) {
   return (
@@ -59,7 +63,10 @@ const MainNavigaitor = StackNavigator({
     screen: Deck,
   },
   Quiz: {
-    screen: Quiz
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz'
+    }
   },
   AddCard: {
     screen: AddCard
@@ -75,12 +82,18 @@ const MainNavigaitor = StackNavigator({
 })
 
 export default class App extends React.Component {
+  componentDidMount () {
+    setLocalNotification()
+  }
+
   render() {
     return (
-      <View style={{flex: 1}}>
-        <UdacistatusBar backgroundColor={white} barStyle='dark-content' />
-        <MainNavigaitor />
-      </View>
-    );
+      <Provider store={createStore(reducer)}>
+        <View style={{flex: 1}}>
+          <UdacistatusBar backgroundColor={white} barStyle='dark-content' />
+          <MainNavigaitor />
+        </View>
+      </Provider>
+    )
   }
 }

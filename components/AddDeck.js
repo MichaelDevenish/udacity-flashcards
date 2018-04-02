@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 import { Text, View, Alert, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { black, gray, white } from '../utils/colors'
 import { saveDeckTitle } from '../utils/storage'
+import { connect } from 'react-redux'
+import { addDeck } from '../actions'
 
-export default class AddDeck extends Component {
-  constructor (props) {
-    super(props)
+class AddDeck extends Component {
 
-    this.state={
-      text:''
-    }
+  state = {
+    text:''
   }
 
-  addCard = () => {
+
+  addDeck = () => {
     const {
       text
     } = this.state
@@ -22,14 +22,14 @@ export default class AddDeck extends Component {
       this.setState({text: ''})
 
       saveDeckTitle(text).then(
-        () =>
+        (data) => {
+          this.props.addDeck(data)
           this.props.navigation.navigate(
-            'AddCard',
+            'Deck',
             {entryId: text}
           )
+        }
       )
-
-
     }
     else {
       Alert.alert(
@@ -53,7 +53,7 @@ export default class AddDeck extends Component {
         />
         <TouchableOpacity
           style={styles.submitBtn}
-          onPress={this.addCard}
+          onPress={this.addDeck}
         >
           <Text style={styles.submitBtnText}>Submit</Text>
         </TouchableOpacity>
@@ -104,3 +104,16 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 })
+
+function mapDispatchToProps (dispatch) {
+  return {
+    addDeck: (decks) => {
+      dispatch(addDeck(decks))
+    }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddDeck)
