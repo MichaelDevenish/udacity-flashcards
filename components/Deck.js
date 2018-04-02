@@ -40,14 +40,10 @@ class Deck extends Component {
           </TouchableOpacity>
           { entry.questions && <TouchableOpacity
             style={styles.startBtn}
-            onPress={() => {
-              clearLocalNotification()
-                .then(setLocalNotification)
-              this.props.navigation.navigate(
+            onPress={() => this.props.navigation.navigate(
                 'Quiz',
                 { data: entry }
-              )
-            }}>
+              )}>
             <Text style={[{color: white}, styles.btnText]}>Start Quiz</Text>
           </TouchableOpacity>}
         </View>

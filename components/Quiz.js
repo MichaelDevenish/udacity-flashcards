@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { black, green, red, white } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/notification'
 
 export default class Quiz extends Component {
   state = {
@@ -58,6 +59,10 @@ export default class Quiz extends Component {
         </View>
       </View>
     )}
+
+    clearLocalNotification()
+      .then(setLocalNotification)
+
     return (
       <View style={styles.container}>
         <View>
