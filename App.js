@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import { black, gray, white } from './utils/colors'
 import Deck from './components/Deck'

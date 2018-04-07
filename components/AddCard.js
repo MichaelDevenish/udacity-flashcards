@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { getDecks, addCardToDeck } from '../utils/storage'
-import { black, gray, white } from '../utils/colors'
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, Platform, ToastAndroid } from 'react-native'
 import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import { Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, Platform, ToastAndroid } from 'react-native'
+import {  addCardToDeck } from '../utils/storage'
+import { black, white } from '../utils/colors'
 import { addDeck } from '../actions'
 
 class AddCard extends Component {
@@ -21,16 +21,25 @@ class AddCard extends Component {
 
   addCard = () => {
     const {
-      frontText,
-      backText
-    } = this.state
+      state: {
+        frontText,
+        backText
+      },
+      props: {
+        navigation: {
+          state: {
+            params: {
+              entryId
+            }
+          }
+        }
+      }
+    } = this
 
-    const a = this.props.navigation.state.params.entryId
-    //todo check if card already exists
     if (frontText !== '' && backText !== '') {
       this.setState({frontText: '', backText: ''})
 
-      addCardToDeck({frontText, backText}, a).then(
+      addCardToDeck({frontText, backText}, entryId).then(
         (data) => {
           this.props.addDeck(data)
           if (Platform.OS === 'ios') {

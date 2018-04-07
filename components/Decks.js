@@ -1,10 +1,10 @@
 import _ from 'lodash'
+import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet, FlatList } from 'react-native'
+import { gray, white } from '../utils/colors'
 import { getDecks } from '../utils/storage'
 import { receiveDecks } from '../actions'
-import { connect } from 'react-redux'
-import { gray, white } from '../utils/colors'
 
 
 class Decks extends Component {

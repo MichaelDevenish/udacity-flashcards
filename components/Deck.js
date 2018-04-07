@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import React, { Component } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { black, gray, white } from '../utils/colors'
-import { clearLocalNotification, setLocalNotification } from '../utils/notification'
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {

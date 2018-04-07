@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { black, green, red, white } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/notification'
+import { black, green, red, white } from '../utils/colors'
+import QuizResult from './QuizResult'
 
 export default class Quiz extends Component {
   state = {
@@ -13,7 +14,6 @@ export default class Quiz extends Component {
 
   render () {
     const data = this.props.navigation.state.params.data
-    console.log(data)
     if(this.state.quizIndex < data.questions.length) {
     return (
       <View style={{backgroundColor:white, flex:1}}>
@@ -62,30 +62,18 @@ export default class Quiz extends Component {
 
     clearLocalNotification()
       .then(setLocalNotification)
-
     return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.questionText}>{this.state.correct} of {data.questions.length} Correct</Text>
-        </View>
-        <View>
-          <TouchableOpacity
-            style={styles.restartBtn}
-            onPress={() => {this.setState({
-              incorrect: 0,
-              correct: 0,
-              quizIndex: 0,
-              front: true
-            })}}>
-            <Text style={[{color: black}, styles.btnText]}>Restart Quiz</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.backBtn}
-            onPress={() => this.props.navigation.goBack()}>
-            <Text style={[{color: white}, styles.btnText]}>Back to Deck</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <QuizResult
+        correct={this.state.correct}
+        total={data.questions.length}
+        onGoBack={() => this.props.navigation.goBack()}
+        onRestart={() => {this.setState({
+          incorrect: 0,
+          correct: 0,
+          quizIndex: 0,
+          front: true
+        })}}
+      />
     )
   }
 }
@@ -128,24 +116,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     fontWeight: 'bold'
-  },
-  restartBtn: {
-    backgroundColor: white,
-    borderColor: black,
-    borderWidth: 2,
-    padding: 15,
-    borderRadius: 7,
-    height: 60,
-    marginLeft: 100,
-    marginRight: 100
-  },
-  backBtn: {
-    backgroundColor: black,
-    padding: 15,
-    borderRadius: 7,
-    height: 60,
-    marginLeft: 100,
-    marginRight: 100,
-    marginTop: 20
   }
 })

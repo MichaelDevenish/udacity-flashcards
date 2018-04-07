@@ -1,23 +1,20 @@
+import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { Text, View, Alert, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { black, gray, white } from '../utils/colors'
 import { saveDeckTitle } from '../utils/storage'
-import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 
 class AddDeck extends Component {
-
   state = {
     text:''
   }
-
 
   addDeck = () => {
     const {
       text
     } = this.state
 
-    //todo check if card already exists
     if (text !== '') {
       this.setState({text: ''})
 
